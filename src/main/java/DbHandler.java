@@ -34,6 +34,7 @@ public class DbHandler {
 			statement.setObject(4, hero.ultimate);
 
 			statement.execute();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
