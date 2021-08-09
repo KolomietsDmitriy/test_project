@@ -4,9 +4,15 @@ public class Main {
 
 	public static void main(String[] args){
 
+		if (args.length < 4) {
+			System.out.println("Невалидный входные параметры");
+			return;
+		}
+
+		DbHandler dbHandler = null;
 		try {
 
-			DbHandler dbHandler = new DbHandler();
+			dbHandler = new DbHandler();
 
 			dbHandler.add(new Hero(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]), args[3]));
 
@@ -14,9 +20,12 @@ public class Main {
 				System.out.println(hero.toString());
 			}
 
-			dbHandler.close();
+//			dbHandler.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
+			dbHandler.close();
+		} finally {
+			dbHandler.close();
 		}
 	}
 }

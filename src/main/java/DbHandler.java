@@ -21,8 +21,14 @@ public class DbHandler {
 		connection = DriverManager.getConnection(CON);
 	}
 
-	public void close() throws SQLException {
-		connection.close();
+	public void close() {
+		try {
+			if (connection != null) {
+				connection.close();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	public void add(Hero hero) {
@@ -34,7 +40,6 @@ public class DbHandler {
 			statement.setObject(4, hero.ultimate);
 
 			statement.execute();
-
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -43,9 +48,11 @@ public class DbHandler {
 	}
 
 	public List<Hero> getAll() {
+		ResultSet resultSet = null;
+		List<Hero> hero = new ArrayList<>();
+
 		try (Statement statement = connection.createStatement()) {
-			ResultSet resultSet = statement.executeQuery("SELECT id, name, level, ultimate from hero");
-			List<Hero> hero = new ArrayList<>();
+			resultSet = statement.executeQuery("SELECT id, name, level, ultimate from hero");
 
 			while (resultSet.next()) {
 				hero.add(new Hero(
@@ -55,11 +62,18 @@ public class DbHandler {
 						resultSet.getString("ultimate")
 				));
 			}
-			resultSet.close();
-			return hero;
+//			resultSet.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return Collections.emptyList();
+		} finally {
+			try {
+				resultSet.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
+
+		return hero;
 	}
 }
