@@ -13,6 +13,9 @@ public class DbHandler {
 
 	private static final String CON = "jdbc:sqlite::resource:java_sqlite";
 
+	private static final String INSERT = "INSERT INTO hero(id, name, level, ultimate) VALUES(?, ?, ?, ?)";
+	private static final String SELECT = "SELECT id, name, level, ultimate from hero";
+
 	private final Connection connection;
 
 	public DbHandler() throws SQLException {
@@ -32,8 +35,7 @@ public class DbHandler {
 	}
 
 	public void add(Hero hero) {
-		try (PreparedStatement statement = connection.prepareStatement(
-				"INSERT INTO hero(id, name, level, ultimate) VALUES(?, ?, ?, ?)")) {
+		try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
 			statement.setObject(1, hero.id);
 			statement.setObject(2, hero.name);
 			statement.setObject(3, hero.level);
@@ -52,7 +54,7 @@ public class DbHandler {
 		List<Hero> hero = new ArrayList<>();
 
 		try (Statement statement = connection.createStatement()) {
-			resultSet = statement.executeQuery("SELECT id, name, level, ultimate from hero");
+			resultSet = statement.executeQuery(SELECT);
 
 			while (resultSet.next()) {
 				hero.add(new Hero(
