@@ -1,7 +1,8 @@
-
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.sql.SQLException;
 import java.util.Objects;
 
+@JsonSerialize
 public class Main {
 
 	public static void main(String[] args) {
@@ -19,20 +20,23 @@ public class Main {
 			Hero hero;
 
 			if (Objects.equals(args[1], "Pudge")) {
-				hero = new Pudge(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]), args[3]);
+				hero = new Pudge(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]), args[3], null);
 			} else {
-				hero = new Hero(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]), args[3]);
+				hero = new Hero(Long.parseLong(args[0]), args[1], Integer.parseInt(args[2]), args[3], null);
+			}
 
+			if (hero instanceof Pudge) {
+				hero.serialize = new PudgeService().serialize((Pudge) hero);
 			}
 
 			dbHandler.add(hero);
 
-			if (Objects.equals(hero.name, "Pudge")) {
-				((Pudge) hero).serialize();
-			}
-
 			for (Hero hero1 : dbHandler.getAll()) {
-				System.out.println(hero1.toString());
+				if (Objects.equals(hero1.name, "Pudge")) {
+					System.out.println((new PudgeService().deserialize(hero1.serialize)).toString());
+				} else {
+					System.out.println(hero1.toString());
+				}
 			}
 
 //			dbHandler.close();

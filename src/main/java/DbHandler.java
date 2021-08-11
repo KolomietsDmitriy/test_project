@@ -13,8 +13,9 @@ public class DbHandler {
 
 	private static final String CON = "jdbc:sqlite::resource:java_sqlite";
 
-	private static final String INSERT = "INSERT INTO hero(id, name, level, ultimate) VALUES(?, ?, ?, ?)";
-	private static final String SELECT = "SELECT id, name, level, ultimate from hero";
+	private static final String INSERT = "INSERT INTO hero(id, name, level, ultimate, serialize) VALUES(?, ?, ?, ?, ?)";
+
+	private static final String SELECT = "SELECT id, name, level, ultimate, serialize from hero";
 
 	private final Connection connection;
 
@@ -40,7 +41,8 @@ public class DbHandler {
 			statement.setObject(2, hero.name);
 			statement.setObject(3, hero.level);
 			statement.setObject(4, hero.ultimate);
-
+			statement.setBytes(5, hero.serialize);
+//			statement.setBlob(5, hero.serialize);
 			statement.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -61,7 +63,8 @@ public class DbHandler {
 						resultSet.getLong("id"),
 						resultSet.getString("name"),
 						resultSet.getInt("level"),
-						resultSet.getString("ultimate")
+						resultSet.getString("ultimate"),
+						resultSet.getBytes("serialize")
 				));
 			}
 //			resultSet.close();

@@ -1,25 +1,15 @@
-import com.fasterxml.jackson.annotation.JsonAutoDetect;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
-import java.io.StringWriter;
+import java.io.Serializable;
 
-@JsonAutoDetect
-public class Pudge extends Hero {
+public class Pudge extends Hero implements Serializable {
 
-	public Pudge(final long id, final String name, final int level, final String ultimate) {
-		super(id, name, level, ultimate);
+	private static final long serialVersionUID = 1L;
+
+	public Pudge(final long id, final String name, final int level, final String ultimate, final byte[] serialize) {
+		super(id, name, level, ultimate, serialize);
 	}
 
-	public void serialize() {
-		try {
-			StringWriter writer = new StringWriter();
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.writeValue(writer, this);
-
-			String result = writer.toString();
-			System.out.println(result);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	public Pudge(final long id, final int level, final String name, final String ultimate) {
+		super(id, name, level, ultimate, null);
 	}
+
 }
