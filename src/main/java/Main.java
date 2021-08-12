@@ -39,7 +39,6 @@ public class Main {
 				}
 			}
 
-//			dbHandler.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			dbHandler.close();

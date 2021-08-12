@@ -48,7 +48,7 @@ public class DbHandler {
 			e.printStackTrace();
 		}
 
-		System.out.printf("%s added%n", hero.name);
+		System.out.printf("%s added%n", hero.getName());
 	}
 
 	public List<Hero> getAll() {

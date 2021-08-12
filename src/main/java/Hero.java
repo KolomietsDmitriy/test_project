@@ -1,6 +1,7 @@
 import static java.lang.String.format;
+import java.io.Serializable;
 
-public class Hero {
+public class Hero implements Serializable {
 	public long id;
 	public String name;
 	public int level;
@@ -13,6 +14,28 @@ public class Hero {
 		this.level = level;
 		this.ultimate = ultimate;
 		this.serialize = serialize;
+	}
+	
+	public Hero(){};
+
+	public long getId() {
+		return id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public String getUltimate() {
+		return ultimate;
+	}
+
+	public byte[] getSerialize() {
+		return serialize;
 	}
 
 	@Override

@@ -12,7 +12,8 @@ public class PudgeService {
 			ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
 			ObjectOutputStream outputStream = new ObjectOutputStream(arrayOutputStream);
 			outputStream.writeObject(pudge);
-			outputStream.close();
+			outputStream.flush();
+
 			return arrayOutputStream.toByteArray();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -20,11 +21,12 @@ public class PudgeService {
 		}
 	}
 
-	public Hero deserialize(byte[] bytes) {
-		try (ByteArrayInputStream arrayInputStream = new ByteArrayInputStream(bytes)) {
-			ObjectInputStream inputStream = new ObjectInputStream(arrayInputStream);
-			Pudge o = (Pudge) inputStream.readObject();
-			return o;
+	public Pudge deserialize(byte[] bytes) {
+		try {
+			ObjectInputStream inputStream = new ObjectInputStream(new ByteArrayInputStream(bytes));
+			Pudge pudge = (Pudge) inputStream.readObject();
+			inputStream.close();
+			return pudge;
 		} catch (IOException | ClassNotFoundException e) {
 			e.printStackTrace();
 			return null;
