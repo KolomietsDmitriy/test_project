@@ -1,12 +1,11 @@
 import static java.lang.String.format;
-import java.io.Serializable;
 
-public class Hero implements Serializable {
-	public long id;
-	public String name;
-	public int level;
-	public String ultimate;
-	public byte[] serialize;
+public class Hero {
+	private long id;
+	private String name;
+	private int level;
+	private String ultimate;
+	private byte[] serialize;
 
 	public Hero(final long id, final String name, final int level, final String ultimate, final byte[] serialize) {
 		this.id = id;
@@ -36,6 +35,26 @@ public class Hero implements Serializable {
 
 	public byte[] getSerialize() {
 		return serialize;
+	}
+
+	public void setId(final long id) {
+		this.id = id;
+	}
+
+	public void setName(final String name) {
+		this.name = name;
+	}
+
+	public void setLevel(final int level) {
+		this.level = level;
+	}
+
+	public void setUltimate(final String ultimate) {
+		this.ultimate = ultimate;
+	}
+
+	public void setSerialize(final byte[] serialize) {
+		this.serialize = serialize;
 	}
 
 	@Override

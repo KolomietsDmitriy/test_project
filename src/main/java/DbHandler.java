@@ -37,11 +37,11 @@ public class DbHandler {
 
 	public void add(Hero hero) {
 		try (PreparedStatement statement = connection.prepareStatement(INSERT)) {
-			statement.setObject(1, hero.id);
-			statement.setObject(2, hero.name);
-			statement.setObject(3, hero.level);
-			statement.setObject(4, hero.ultimate);
-			statement.setBytes(5, hero.serialize);
+			statement.setObject(1, hero.getId());
+			statement.setObject(2, hero.getName());
+			statement.setObject(3, hero.getLevel());
+			statement.setObject(4, hero.getUltimate());
+			statement.setBytes(5, hero.getSerialize());
 //			statement.setBlob(5, hero.serialize);
 			statement.execute();
 		} catch (SQLException e) {

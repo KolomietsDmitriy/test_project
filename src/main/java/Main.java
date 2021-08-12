@@ -26,14 +26,14 @@ public class Main {
 			}
 
 			if (hero instanceof Pudge) {
-				hero.serialize = new PudgeService().serialize((Pudge) hero);
+				hero.setSerialize(new PudgeService().serialize((Pudge) hero));
 			}
 
 			dbHandler.add(hero);
 
 			for (Hero hero1 : dbHandler.getAll()) {
-				if (Objects.equals(hero1.name, "Pudge")) {
-					System.out.println((new PudgeService().deserialize(hero1.serialize)).toString());
+				if (Objects.equals(hero1.getName(), "Pudge")) {
+					System.out.println((new PudgeService().deserialize(hero1.getSerialize())).toString());
 				} else {
 					System.out.println(hero1.toString());
 				}
